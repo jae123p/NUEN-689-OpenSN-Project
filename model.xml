@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='utf-8'?>
+<model>
+  <materials>
+    <material depletable="true" id="29" name="Oralloy">
+      <density units="sum"/>
+      <nuclide ao="0.0004921" name="U234"/>
+      <nuclide ao="0.044917" name="U235"/>
+      <nuclide ao="0.0025993" name="U238"/>
+    </material>
+    <material id="30" name="nickel">
+      <density units="sum"/>
+      <nuclide ao="0.062169186618" name="Ni58"/>
+      <nuclide ao="0.023947459382" name="Ni60"/>
+      <nuclide ao="0.0010409794779999999" name="Ni61"/>
+      <nuclide ao="0.0033190980900000004" name="Ni62"/>
+      <nuclide ao="0.0008452764320000001" name="Ni64"/>
+    </material>
+  </materials>
+  <geometry>
+    <cell id="37" material="29" name="or" region="-25" universe="26"/>
+    <cell id="38" material="30" name="nickel" region="25 -26" universe="26"/>
+    <surface coeffs="0 0 0 6.4627" id="25" type="sphere"/>
+    <surface boundary="vacuum" coeffs="0 0 0 26.7827" id="26" type="sphere"/>
+  </geometry>
+  <settings>
+    <run_mode>eigenvalue</run_mode>
+    <particles>10000</particles>
+    <batches>3000</batches>
+    <inactive>20</inactive>
+    <source particle="neutron" strength="1.0" type="independent">
+      <space type="box">
+        <parameters>-1 -1 -1 1 1 1</parameters>
+      </space>
+    </source>
+    <output>
+      <tallies>false</tallies>
+    </output>
+  </settings>
+  <tallies>
+    <filter id="85" type="material">
+      <bins>29 30</bins>
+    </filter>
+    <filter id="81" type="energy">
+      <bins>1e-05 1.0 5.0 10.0 50.0 100.0 300.0 500.0 1000.0 2000.0 3000.0 5000.0 10000.0 20000.0 30000.0 50000.0 80000.0 100000.0 150000.0 200000.0 300000.0 400000.0 600000.0 800000.0 1000000.0 1500000.0 2000000.0 3000000.0 5000000.0 10000000.0 20000000.0</bins>
+    </filter>
+    <tally id="112">
+      <filters>85 81</filters>
+      <nuclides>total</nuclides>
+      <scores>flux total</scores>
+      <estimator>tracklength</estimator>
+      <trigger scores="flux" threshold="0.0001" type="std_dev"/>
+      <trigger scores="total" threshold="0.0001" type="std_dev"/>
+      <trigger scores="flux" threshold="0.0001" type="std_dev"/>
+      <trigger scores="total" threshold="0.0001" type="std_dev"/>
+    </tally>
+  </tallies>
+</model>

@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='utf-8'?>
+<model>
+  <materials>
+    <material depletable="true" id="1" name="Oralloy">
+      <density units="sum"/>
+      <nuclide ao="0.0004921" name="U234"/>
+      <nuclide ao="0.044917" name="U235"/>
+      <nuclide ao="0.0025993" name="U238"/>
+    </material>
+  </materials>
+  <geometry>
+    <cell id="1" material="1" name="OralloyCell" region="1 -2 3 -4" universe="1"/>
+    <surface boundary="reflective" coeffs="-5.0" id="1" name="minimum x" type="x-plane"/>
+    <surface boundary="reflective" coeffs="5.0" id="2" name="maximum x" type="x-plane"/>
+    <surface boundary="reflective" coeffs="-5.0" id="3" name="minimum y" type="y-plane"/>
+    <surface boundary="reflective" coeffs="5.0" id="4" name="maximum y" type="y-plane"/>
+  </geometry>
+  <settings>
+    <run_mode>eigenvalue</run_mode>
+    <particles>10000</particles>
+    <batches>500</batches>
+    <inactive>20</inactive>
+    <source particle="neutron" strength="1.0" type="independent">
+      <space type="box">
+        <parameters>-10 -10 -10 10 10 10</parameters>
+      </space>
+      <energy parameters="0.0 20000000.0" type="uniform"/>
+    </source>
+    <output>
+      <path>Oralloy</path>
+      <tallies>false</tallies>
+    </output>
+  </settings>
+  <tallies>
+    <filter id="1" type="material">
+      <bins>1</bins>
+    </filter>
+    <filter id="2" type="energy">
+      <bins>1e-05 1.0 5.0 10.0 50.0 100.0 300.0 500.0 1000.0 2000.0 3000.0 5000.0 10000.0 20000.0 30000.0 50000.0 80000.0 100000.0 150000.0 200000.0 300000.0 400000.0 600000.0 800000.0 1000000.0 1500000.0 2000000.0 3000000.0 5000000.0 10000000.0 20000000.0</bins>
+    </filter>
+    <filter id="13" type="energy">
+      <bins>1e-05 20000000.0</bins>
+    </filter>
+    <filter id="12" type="energyout">
+      <bins>1e-05 1.0 5.0 10.0 50.0 100.0 300.0 500.0 1000.0 2000.0 3000.0 5000.0 10000.0 20000.0 30000.0 50000.0 80000.0 100000.0 150000.0 200000.0 300000.0 400000.0 600000.0 800000.0 1000000.0 1500000.0 2000000.0 3000000.0 5000000.0 10000000.0 20000000.0</bins>
+    </filter>
+    <filter id="19" type="legendre">
+      <order>3</order>
+    </filter>
+    <tally id="43">
+      <filters>1 2</filters>
+      <nuclides>total</nuclides>
+      <scores>flux total absorption scatter fission nu-fission (n,2n) (n,3n) (n,4n)</scores>
+      <estimator>tracklength</estimator>
+      <trigger scores="flux" threshold="0.0001" type="std_dev"/>
+      <trigger scores="total" threshold="0.0001" type="std_dev"/>
+      <trigger scores="flux" threshold="0.0001" type="std_dev"/>
+      <trigger scores="absorption" threshold="0.0001" type="std_dev"/>
+      <trigger scores="flux" threshold="0.0001" type="std_dev"/>
+      <trigger scores="scatter" threshold="0.0001" type="std_dev"/>
+      <trigger scores="flux" threshold="0.0001" type="std_dev"/>
+      <trigger scores="fission" threshold="0.0001" type="std_dev"/>
+      <trigger scores="flux" threshold="0.0001" type="std_dev"/>
+      <trigger scores="nu-fission" threshold="0.0001" type="std_dev"/>
+      <trigger scores="flux" threshold="0.0001" type="std_dev"/>
+      <trigger scores="absorption" threshold="0.0001" type="std_dev"/>
+      <trigger scores="(n,2n)" threshold="0.0001" type="std_dev"/>
+      <trigger scores="(n,3n)" threshold="0.0001" type="std_dev"/>
+      <trigger scores="(n,4n)" threshold="0.0001" type="std_dev"/>
+      <trigger scores="flux" threshold="0.0001" type="std_dev"/>
+      <trigger scores="scatter" threshold="0.0001" type="std_dev"/>
+    </tally>
+    <tally id="20">
+      <filters>1 13</filters>
+      <nuclides>total</nuclides>
+      <scores>nu-fission</scores>
+      <estimator>analog</estimator>
+      <trigger scores="nu-fission" threshold="0.0001" type="std_dev"/>
+    </tally>
+    <tally id="21">
+      <filters>1 12</filters>
+      <nuclides>total</nuclides>
+      <scores>nu-fission</scores>
+      <estimator>analog</estimator>
+      <trigger scores="nu-fission" threshold="0.0001" type="std_dev"/>
+    </tally>
+    <tally id="36">
+      <filters>1 2</filters>
+      <nuclides>total</nuclides>
+      <scores>flux</scores>
+      <estimator>analog</estimator>
+      <trigger scores="flux" threshold="0.0001" type="std_dev"/>
+      <trigger scores="flux" threshold="0.0001" type="std_dev"/>
+    </tally>
+    <tally id="44">
+      <filters>1 2 12 19</filters>
+      <nuclides>total</nuclides>
+      <scores>scatter nu-scatter</scores>
+      <estimator>analog</estimator>
+      <trigger scores="scatter" threshold="0.0001" type="std_dev"/>
+      <trigger scores="nu-scatter" threshold="0.0001" type="std_dev"/>
+      <trigger scores="scatter" threshold="0.0001" type="std_dev"/>
+    </tally>
+    <tally id="48">
+      <filters>1 2 12</filters>
+      <nuclides>total</nuclides>
+      <scores>nu-scatter scatter</scores>
+      <estimator>analog</estimator>
+      <trigger scores="nu-scatter" threshold="0.0001" type="std_dev"/>
+      <trigger scores="nu-scatter" threshold="0.0001" type="std_dev"/>
+      <trigger scores="scatter" threshold="0.0001" type="std_dev"/>
+    </tally>
+  </tallies>
+</model>
